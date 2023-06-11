@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>展开语法</title>
+		<style type="text/css">
+			#loading-status {
+				width: 300px;
+				border: 1px #669CB8 solid;
+				-webkit-box-shadow: 0px 2px 2px #D0D4D6;
+				height: 15px;
+				-webkit-border-radius: 10px;
+				background: -webkit-gradient(linear, 0 0, 0 100%, from(#E1E9EE), to(white));
+				padding: 1px;
+			}
+
+/* 			#precent {
+				background: -webkit-gradient(linear, 0 0, 0 100%, from(#7BC3FF), color-stop(0.5, #42A9FF), to(#7BC3FF));
+				width: 0%;
+				height: 100%;
+				-webkit-border-radius: 10px;
+			} */
+
+			#precent {
+				background: -webkit-gradient(linear, 0 0, 0 100%, from(#7BC3FF), color-stop(0.5, #42A9FF), to(#7BC3FF));
+				width: 0%;
+				height: 100%;
+				-webkit-border-radius: 10px;
+				transition: width 2s ease-in-out;
+				-webkit-transition: width 2s ease-in-out;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>欢迎学习展开语法</h2>
+		<div id="loading-status">
+			<div id="precent" ref="addAlert"></div>
+		</div>
+		<script type="text/javascript">
+			
+			setTimeout(()=>{
+				document.getElementById('precent').style.width = '80%';
+			},2000);
+			
+			// 创建一个立即执行函数
+			(function(str) {
+				console.log('欢迎学习' + str);
+			})('展开语法');
+
+			// 做加法计算	
+			function sum(x, y, z) {
+				return x + y + z;
+			}
+
+			const numbers = [1, 2, 3];
+
+			console.log('在函数调用时使用使用展开语法');
+			// 在函数调用时使用使用展开语法
+			// expected output: 6
+			console.log(sum(...numbers));
+
+			// expected output: 6
+			console.log(sum.apply(null, numbers));
+
+			// 构造字面量数组时使用展开语法
+			var parts = ['shoulders', 'knees'];
+			var lyrics = ['head', ...parts, 'and', 'toes'];
+			console.log('构造字面量数组时使用展开语法');
+			console.log(lyrics);
+
+			// 数组拷贝（深拷贝）
+			var arr = [1, 2, 3];
+			// like arr.slice()
+			var arr2 = [...arr];
+			arr2.push(4);
+			console.log('数组拷贝（深拷贝）');
+			console.log(arr2);
+
+			// 连接多个数组
+			var arr1 = [1, 2, 3, 4];
+			var arr2 = [5, 6, 7, 8];
+			var arr = [...arr1, ...arr2];
+			console.log('连接多个数组');
+			console.log(arr);
+
+			// 构造字符串时使用展开语法
+			var arr1 = ['a', 'b', ...'cdef'];
+			console.log('构造字符串时使用展开语法');
+			//expected output: ['a','b','c','d','e','f']
+			console.log(arr1);
+
+			// 构造字面量对象时使用展开语法（深拷贝）
+			var obj1 = {
+				name: 'DaMing',
+				x: 16
+			};
+			var obj2 = {
+				name: 'LingLing',
+				y: 14
+			};
+			var clonedObj = {
+				...obj1
+			};
+			clonedObj.name = 'Jimmy';
+			// 合并对象，取并集
+			var cloneObj1 = {
+				...obj1,
+				...obj2
+			}
+			console.log('构造字面量对象时使用展开语法');
+			console.log(obj1);
+			console.log(obj2);
+			console.log(clonedObj);
+			console.log(cloneObj1);
+		</script>
+	</body>
+</html>
