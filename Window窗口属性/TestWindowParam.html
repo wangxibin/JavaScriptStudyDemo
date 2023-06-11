@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" style="width: 100%;height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <title>iEZ-APP</title>
+    <meta name="viewport"
+          content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script
+            src="https://code.jquery.com/jquery-1.12.0.min.js"
+            integrity="sha256-Xxq2X+KtazgaGuA2cWR1v3jJsuMJUozyIXDB3e793L8="
+            crossorigin="anonymous"></script>
+</head>
+<body style="background:#F6B1F5;;padding:20px;margin:20px;border:20px solid green;;display: flex;align-items: center;position: relative;">
+<div id="divOne"
+     style="width: 200px;height:400px;padding:20px;margin:20px;border:20px solid green;background:orange;margin: 0 auto;overflow: auto;">
+    <!--<div id="divOne-child-one" style="width: 150px;height:800px; background: #23A6E9;">-->
+    <!--</div>-->
+</div>
+<script>
+    // IE11并不支持此属性，取到的值为undefined。
+    // ie-edg支持此属性，浏览器全屏测得结果：76（非全屏状态：screenX = screenLeft - 8；screenY=screenTop - 76）
+    // Opera支持此属性，浏览器全屏测得结果：0（screenX=screenLeft；screenY=screenTop）
+    // Safari支持此属性，浏览器全屏测得结果：8（screenX=screenLeft；screenY=screenTop）
+    // FireFox支持此属性，浏览器全屏测得结果：-8（screenX=screenLeft；screenY=screenTop）
+    // Chrome支持此属性，浏览器全屏测得结果：0（screenX=screenLeft；screenY=screenTop）
+    // 360极速浏览器支持此属性，浏览器全屏测得结果：0（screenX=screenLeft；screenY=screenTop）
+    var screenTopIeSafariOpera = window.screenTop;
+    console.log("IE某些版本、Safari、Opera浏览器距离屏幕上侧的距离screenTopIeSafariOpera：" + screenTopIeSafariOpera);
+    // 备注：经过测试IE11并不支持此属性，取到的值为undefined
+    // ie-edg支持此属性，浏览器全屏测得结果：0（非全屏状态：screenX = screenLeft - 8；screenY=screenTop - 76）
+    // Opera支持此属性，浏览器全屏测得结果：0screenX=screenLeft；screenY=screenTop）
+    // Safari支持此属性，浏览器全屏测得结果：8（screenX=screenLeft；screenY=screenTop）
+    // FireFox支持此属性，浏览器全屏测得结果：-8（screenX=screenLeft；screenY=screenTop）
+    // Chrome支持此属性，浏览器全屏测得结果：0（screenX=screenLeft；screenY=screenTop）
+    // 360极速浏览器支持此属性，浏览器全屏测得结果：0（screenX=screenLeft；screenY=screenTop）
+    var screenLeftIeSafariOpera = window.screenLeft;
+    console.log("IE某些版本、Safari、Opera浏览器距离屏幕左侧的距离screenLeftIeSafariOpera：" + screenLeftIeSafariOpera);
+    // IE11支持此属性，浏览器全屏测得结果：-8
+    // ie-edg支持此属性，浏览器全屏测得结果：0（非全屏状态：screenX = screenLeft - 8；screenY=screenTop - 76）
+    // Opera支持此属性，浏览器全屏测得结果：0（screenX=screenLeft；screenY=screenTop）
+    // Safari支持此属性，浏览器全屏测得结果：8（screenX=screenLeft；screenY=screenTop）
+    // FireFox支持此属性，浏览器全屏测得结果：-8（screenX=screenLeft；screenY=screenTop）
+    // Chrome支持此属性，浏览器全屏测得结果：0（screenX=screenLeft；screenY=screenTop）
+    // 360极速浏览器支持此属性，浏览器全屏测得结果：0（screenX=screenLeft；screenY=screenTop）
+    var screenYFirefoxSafari = window.screenY;
+    console.log("Firefox、Safari浏览器距离屏幕上侧的距离screenYFirefoxSafari：" + screenYFirefoxSafari);
+    // IE11支持此属性，浏览器全屏测得结果：-8
+    // ie-edg支持此属性，浏览器全屏测得结果：0（非全屏状态：screenX = screenLeft - 8；screenY=screenTop - 76）
+    // Opera支持此属性，浏览器全屏测得结果：0（screenX=screenLeft；screenY=screenTop）
+    // Safari支持此属性，浏览器全屏测得结果：8（screenX=screenLeft；screenY=screenTop）
+    // FireFox支持此属性，浏览器全屏测得结果：-8（screenX=screenLeft；screenY=screenTop）
+    // Chrome支持此属性，浏览器全屏测得结果：0（screenX=screenLeft；screenY=screenTop）
+    // 360极速浏览器支持此属性，浏览器全屏测得结果：0（screenX=screenLeft；screenY=screenTop）
+    var screenXFirefoxSafari = window.screenX;
+    console.log("Firefox、Safari浏览器距离屏幕左侧的距离screenXFirefoxSafari：" + screenXFirefoxSafari);
+    console.log("=======以上是测试浏览器距离屏幕的位置=============");
+    console.log("=============我是路过的分隔符===============");
+    // win10系统，台式机显示器：1920x1080
+    var screenHeight = window.screen.height; // 屏幕高度（1080）
+    console.log("屏幕高度screenHeight：" + screenHeight);
+    var screenWidth = window.screen.width; // 屏幕宽度（1920）
+    console.log("屏幕宽度screenWidth：" + screenWidth);
+    var screenAvailHeight = window.screen.availHeight; // 屏幕可用高度（1040）
+    console.log("屏幕可见高度screenAvailHeight：" + screenAvailHeight);
+    var screenAvailWidth = window.screen.availWidth; // 屏幕可以宽度（1920）
+    console.log("屏幕可见宽度screenAvailWidth：" + screenAvailWidth);
+    var statusBarAvailWidth = window.screen.height - window.screen.availHeight; // 系统的状态栏的高度（40）
+    console.log("状态栏的宽度statusBarAvailWidth：" + statusBarAvailWidth);
+    console.log("===========以上是测试屏幕高宽度=============");
+    console.log("=============我是路过的分隔符===============");
+    var windowOuterHeight = window.outerHeight; // 浏览器高度
+    console.log("浏览器高度windowOuterHeight：" + windowOuterHeight);
+    var windowOuterWidth = window.outerWidth; // 浏览器宽度
+    console.log("浏览器宽度windowOuterWidth：" + windowOuterWidth);
+    console.log("===========以上是测试浏览器的高度=============");
+    console.log("=============我是路过的分隔符===============");
+    var windowInnerHeight = window.innerHeight; // 页面可用高度
+    console.log("浏览器页面可用高度windowInnerHeight：" + windowInnerHeight);
+    var windowInnerWidth = window.innerWidth; // 页面可用宽度
+    console.log("浏览器页面可用宽度windowInnerWidth：" + windowInnerWidth);
+    var browserToolbarHeight = window.outerHeight - window.innerHeight; // 浏览器工具栏
+    console.log("浏览器工具栏browserToolbarHeight：" + browserToolbarHeight);
+    console.log("====以上是测试浏览器可以呈现页面的高度========");
+    console.log("=============我是路过的分隔符===============");
+    var clientWidth = document.body.clientWidth; // body的真实显示的宽度 + padding
+    console.log("<body>的展示的宽度clientWidth：" + clientWidth);
+    var clientHeight = document.body.clientHeight; // body的真实显示的高度 + padding
+    console.log("<body>的展示的高度clientHeight：" + clientHeight);
+    var offsetWidth = document.body.offsetWidth; // body的总宽度=>body的真实现实宽度 + padding + border（不包括Margin）
+    console.log("<body>总的宽度offsetWidth：" + offsetWidth);
+    var offsetHeight = document.body.offsetHeight; // body的总高度=>body的真实现实高度 + padding + border（不包括Margin）
+    console.log("<body>总的宽度offsetHeight：" + offsetHeight);
+    var scrollWidth = document.body.scrollWidth; // 包括元素宽度、Padding和溢出尺寸，不包括Border和Margin，无溢出的情况，与clientWidth相等
+    console.log("<body>的scrollWidth：" + scrollWidth);
+    var scrollHeight = document.body.scrollHeight; // 包括元素宽度、Padding和溢出尺寸，不包括Border和Margin，无溢出的情况，与clientWidth相等
+    console.log("<body>的scrollHeight：" + scrollHeight);
+    var scrollBarHeight = windowInnerHeight - clientHeight; // body的总高度，包括延伸出去，未显示的宽度，也包括margin和padding
+    console.log("滚动条的高度scrollBarHeight：" + scrollBarHeight);
+    console.log("====以上是测试<body>的高度========");
+    console.log("=============我是路过的分隔符===============");
+    var scrollTop = document.body.scrollTop; // 网页被卷去的Top(滚动条)
+    console.log("scrollTop：" + scrollTop);
+    var scrollLeft = document.body.scrollLeft; // 网页被卷去的Left(滚动条)
+    console.log("scrollLeft：" + scrollLeft);
+    console.log("====以上是测试<body>的scroll高度和宽度========");
+    console.log("=============我是路过的分隔符===============");
+    var divOne = document.getElementById("divOne");
+    var divOneClientWidth = divOne.clientWidth; // divOne的真实显示的宽度 + padding（不包括Border、Margin）
+    console.log("divOne的展示的宽度clientWidth：" + divOneClientWidth);
+    var divOneClientHeight = divOne.clientHeight; // divOne的真实显示的高度 + padding（不包括Border、Margin）
+    console.log("divOne的展示的高度clientHeight：" + divOneClientHeight);
+    var divOneOffsetWidth = divOne.offsetWidth; // divOne的总宽度=>divOne的真实现实宽度 + padding + border（不包括Margin）
+    console.log("divOne总的宽度offsetWidth：" + divOneOffsetWidth);
+    var divOneOffsetHeight = divOne.offsetHeight; // divOne的总高度=>divOne的真实现实高度 + padding + border（不包括Margin）
+    console.log("divOne总的宽度offsetHeight：" + divOneOffsetHeight);
+    var divOneScrollWidth = divOne.scrollWidth; //
+    console.log("divOne的scrollWidth：" + divOneScrollWidth);
+    var divOneScrollHeight = divOne.scrollHeight; //
+    console.log("divOne的scrollHeight：" + divOneScrollHeight);
+    //style.width的值需要事先定义，否则取到的值为空。
+    // 而且必须要定义在html里(内联样式)，如果定义在css里，style.height的值仍然为空，但元素偏移有效；而offsetWidth则仍能取到。
+    var divOneStyleWidth = divOne.style.width; // divOne的元素宽度（返回值是带px的字符串）（不包括Padding、Border、Margin）
+    console.log("divOne的style.width：" + divOneStyleWidth);
+    var divOneStyleHeight = divOne.style.height; //divOne的元素高度（返回值是带px的字符串）（不包括Padding、Border、Margin）
+    console.log("divOne的style.height：" + divOneStyleHeight);
+    var divOneClientTop = divOne.clientTop; // divOne上边距的距离 PaddingTop
+    console.log("divOne的clientTop：" + divOneClientTop);
+    var divOneClientLeft = divOne.clientLeft; // divOne左边距的距离 PaddingLeft
+    console.log("divOne的clientLeft：" + divOneClientLeft);
+    // divOne的上外缘（从borderTop外侧开始）距离最近采用定位父元素内壁（父元素的borderTop内侧）的距离。
+    // 如果父元素中没有采用定位的，则是divOne上外边缘距离（从borderTop外侧开始）到body内壁（body的borderTop内侧）的距离。
+    // 所谓的定位就是position属性值为relative、absolute或者fixed。
+    // 此属性只读
+    var divOneOffsetTop = divOne.offsetTop;
+    console.log("divOne的offsetTop：" + divOneOffsetTop);
+    // divOne的左外缘（从border左外侧开始）距离最近采用定位父元素内壁（父元素的border左内侧）的距离。
+    // 如果父元素中没有采用定位的，则是divOne左外边缘距离（从divOne的border左外侧开始）到body内壁（body的border左内侧）的距离。
+    // 所谓的定位就是position属性值为relative、absolute或者fixed。
+    // 此属性只读
+    var divOneOffsetLeft = divOne.offsetLeft;
+    console.log("divOne的offsetLeft：" + divOneOffsetLeft);
+    var styleTop = divOne.style.top; // divOne上边距的距离 PaddingTop
+    console.log("divOne的style.top：" + styleTop);
+    var styleLeft = divOne.style.left; // divOne左边距的距离 PaddingLeft
+    console.log("divOne的style.left：" + styleLeft);
+    var divOneScrollTop = divOne.scrollTop; //
+    console.log("divOne的scrollTop：" + divOneScrollTop);
+    var divOneScrollLeft = divOne.scrollLeft; //
+    console.log("divOne的scrollLeft：" + divOneScrollLeft);
+
+
+    console.log("========================================");
+    console.log("=============我是路过的分隔符=============");
+    console.log("========================================");
+    var windowHeight = $(window).height(); //浏览器当前窗口可视区域高度
+    console.log("jQuery=>window=>height：" + windowHeight);
+    var documentHeight = $(document).height(); // 浏览器当前窗口文档的高度
+    console.log("jQuery=>document=>height：" + documentHeight);
+    var bodyHeight = $(document.body).height(); // 浏览器当前窗口文档body的高度
+    console.log("jQuery=>document.body=>height：" + bodyHeight);
+    var bodyOuterHeight = $(document.body).outerHeight(true); // 浏览器当前窗口文档body的总高度 包括border padding margin
+    console.log("jQuery=>document.body=>outerHeight：" + bodyOuterHeight);
+    var windowWidth = $(window).width(); // 浏览器当前窗口可视区域宽度
+    console.log("jQuery=>window=>width：" + windowWidth);
+    var documentWidth = $(document).width(); // 浏览器当前窗口文档对象宽度
+    console.log("jQuery=>document=>：" + documentWidth);
+    var bodyWidth = $(document.body).width(); // 浏览器当前窗口文档body的宽度
+    console.log("jQuery=>body=>width：" + bodyWidth);
+
+    document.getElementById("divOne").onscroll = function () {
+        var divOneOffsetTop = divOne.offsetTop;
+        console.log("divOne的offsetTop：" + divOneOffsetTop);
+        var divOneOffsetLeft = divOne.offsetLeft;
+        console.log("divOne的offsetLeft：" + divOneOffsetLeft);
+        var divOneScrollTop = divOne.scrollTop; //
+        console.log("divOne的scrollTop：" + divOneScrollTop);
+        var divOneScrollLeft = divOne.scrollLeft; //
+        console.log("divOne的scrollLeft：" + divOneScrollLeft);
+    }
+
+</script>
+</body>
+
+
+</html>

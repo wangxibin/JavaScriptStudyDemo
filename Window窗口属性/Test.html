@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>坐标值的设置与获取</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .bigBox {
+            width: 150px;
+            height: 150px;
+            background-color: lawngreen;
+            position: relative;
+            top: 50px;
+            left: 50px;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+        }
+    </style>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>坐标值的设置与获取</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            .bigBox {
+                width: 150px;
+                height: 150px;
+                background-color: lawngreen;
+                position: relative;
+                top: 50px;
+                left: 50px;
+            }
+
+            .box {
+                width: 100px;
+                height: 100px;
+                background-color: yellow;
+            }
+        </style>
+        <script src="jquery-3.3.1.js"></script>
+        <script>
+            $(document).ready(function () {
+                //offset 设置坐标值
+                $("button:first").click(function () {
+                    var txtTop = $("#txtTop").val();
+                    var txtLeft = $("#txtLeft").val();
+                    $(".box").offset({top: txtTop, left: txtLeft});
+                });
+                //offset 获取坐标值,距离页面上边、左边的距离，与父元素子元素的相对位置无关
+                $("button:eq(1)").click(function () {
+                    console.log("距离页面上部的距离：" + $(".box").offset().top);
+                    console.log("距离页面左部的距离：" + $(".box").offset().left);
+                });
+                // position 获取坐标值，当父元素相对定位、绝对定位或固定定位时，利用position获得的时相对于父元素的上边和左边的距离
+                $("button:eq(2)").click(function () {
+                    console.log("距离页面上部的距离：" + $(".box").position().top);
+                    console.log("距离页面左部的距离：" + $(".box").position().left);
+                });
+            });
+        </script>
+    </head>
+<body>
+<label for="txtTop">Top: </label><input type="text" id="txtTop"/>
+<label for="txtLeft">Left: </label><input type="text" id="txtLeft"/>
+<button>设置坐标值</button>
+<button>offset 获取坐标值</button>
+<button>position 获取坐标值</button>
+<div class="bigBox">
+    <div class="box"></div>
+</div>
+</body>
+</html>
+    $(document).ready(function () {
+        //offset 设置坐标值
+        $("button:first").click(function () {
+            var txtTop = $("#txtTop").val();
+            var txtLeft = $("#txtLeft").val();
+            $(".box").offset({top: txtTop, left: txtLeft});
+        });
+        //offset 获取坐标值,距离页面上边、左边的距离，与父元素子元素的相对位置无关
+        $("button:eq(1)").click(function () {
+            console.log("距离页面上部的距离：" + $(".box").offset().top);
+            console.log("距离页面左部的距离：" + $(".box").offset().left);
+        });
+        // position 获取坐标值，当父元素相对定位、绝对定位或固定定位时，利用position获得的时相对于父元素的上边和左边的距离
+        $("button:eq(2)").click(function () {
+            console.log("距离页面上部的距离：" + $(".box").position().top);
+            console.log("距离页面左部的距离：" + $(".box").position().left);
+        });
+    });
+</script>
+</head>
+<body>
+<label for="txtTop">Top: </label><input type="text" id="txtTop"/>
+<label for="txtLeft">Left: </label><input type="text" id="txtLeft"/>
+<button>设置坐标值</button>
+<button>offset 获取坐标值</button>
+<button>position 获取坐标值</button>
+<div class="bigBox">
+    <div class="box"></div>
+</div>
+</body>
+</html>
