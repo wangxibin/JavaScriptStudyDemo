@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta queryName="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" type="text/css" href="./common.css" />
+		<title>Iframe教程</title>
+	</head>
+	<body style="background-color: black">
+		<h2>iframe页面</h2>
+		<button onclick="iframeDoAction()">点击触发iframe页面事件</button>
+		<script>
+			const iframeDoAction = () => {
+				console.log("Iframe教程：触发iframe页面的事件：iframeDoAction");
+			};
+
+			/**
+			 * 页面传值
+			 * 一共有两种方式：1、通过URL传参。2、通过window.postMessage()方法。
+			 */
+
+			/**
+			 * 1、通过URL传参
+			 * 子页面接收父页面传递过来的数据
+			 */
+			function getUrlQuerys(key) {
+				const reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+				const r = window.location.search.substr(1).match(reg);
+				if (r != null) return r[2];
+				return null;
+			}
+
+			/**
+			 * 2、通过window.postMessage()方法
+			 * 子页面接收父页面传递过来的数据
+			 */
+			const iframeReceiveData = (data) => {
+				console.log("Iframe教程：iframeReceiveData()=>接收到父组件传递的参数：", data);
+			}
+
+			window.onload = function() {
+				// 1、通过URL传参
+				console.log("Iframe教程：iframe页面事件：window.onload");
+				console.log("Iframe教程：getUrlQuerys()=>id：", getUrlQuerys("id"));
+				console.log("Iframe教程：getUrlQuerys()=>name：", decodeURIComponent(getUrlQuerys("name")));
+				// 2、通过window.postMessage()方法
+				window.addEventListener('message', (e) => {
+					iframeReceiveData(e.data);
+				})
+			}
+
+			/**
+			 * 子页面传值给父页面
+			 * 一共有两种方式：1、通过全局变量方式传参。2、通过window.parent.postMessage()方法。
+			 */
+
+			/**
+			 * 1、通过全局变量方式传参
+			 * 子页面传值给父页面
+			 */
+			var commonData4 = {
+				name: "xiaojin",
+				id: 1
+			};
+			var commonData5 = 'xiaojin'
+			var commonData6 = () => {
+				console.log(123)
+			}
+
+			/**
+			 * 2、通过window.parent.postMessage()方法。
+			 * 子页面传值给父页面
+			 */
+
+			const iframeDoAction = () => {
+				console.log("点击触发iframe页面的事件：iframeDoAction");
+				window.parent.postMessage("I am xiaojin", "*");
+			};
+		</script>
+	</body>
+</html>

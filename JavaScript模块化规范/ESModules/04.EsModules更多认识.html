@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>04.EsModules更多认识</title>
+	</head>
+	<body>
+		<script>
+			// 01.导入方法常识
+			// 一、文件导入的方法
+			var name = 'jack'
+			
+			var age = 18
+			
+			// 导出具名的变量，import的时候必须使用name和age命名
+			export { name,age}
+			
+			console.log('module action');
+			
+			// 导出一个不具名的字符串
+			export default 'default export'
+			
+			// 1、不能省略.js，这点跟CommonJs是不一样的
+			// import {name} from './module' 
+			import {name } from './module.js'
+			console.log(name)
+			
+			// 2、不能只导入目录就可以找到index.js，这点跟CommonJs是不一样的
+			// import {lowercase} from 'utils'
+			import {lowercase} from 'utils/index.js'
+			console.log(lowercase('HHH'));
+			
+			// 3、不能以字母开头，因为ESModules以为加载第三方模块，而不是本地模块了，这点和CommonJs是相同的
+			// import {name} from 'module.js'
+			import {name} from './module.js'
+			
+			// 4、可以使用绝对路径省略前面的. 根目录就是当前index.html目录
+			import {name} from '/04-import/module.js'
+			import {name} from 'http://localhost:3000/04-import/module.js'
+			
+			// 二、仅仅导入模块
+			// 1、两种导入方式是相同的，仅仅导入模块有啥作用呢？又不能使用里面的变量，没啥用，实用性为0
+			import {} from './module.js'
+			
+			import './module.js'
+			
+			// 三、把模块下所有的export属性都导出来，可以用*
+			import  * as mod from './module.js'
+			console.log(mod)
+			
+			// 四、2个不能
+			// 1、不能将导入模块赋值给一个变量
+			var modulePath = './module.js' 
+			import {name} from modulePath // 这才是正确导入写法
+			console.log(name);
+			
+			// 2、不能嵌套在一个if、while语句中，只能在最顶层就到处模块
+			if(true){
+				import {name} from './module.js'
+			}
+			
+			// 3、全局动态的导入方案，通过then拿到这个模块
+			import('./module.js').then((module)=>{
+				console.log(module)
+			}); 
+			
+			// 五、提取默认成员
+			// 1、复杂默认成员导出方式
+			import {name,age,default as title} from './module.js'
+			import abc, {name,age} from './modules.js'
+			console.log(name,age,abc)
+			
+			
+			// 02.要是多个导入模块怎么办？
+			// 场景：如果模块多了怎么办？还这样一个个导入么？
+			// 解决：把他们都导入一个模块require.js里，然后再从index.js导入这个汇总所有模块的模块。比如：
+			import {Button} from './button.js'
+			import {Avatar} from './avatar.js'
+			
+			export {Button,Avatar}
+			
+		</script>
+	</body>
+</html>

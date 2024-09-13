@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>JavaScript对象</title>
+		<script type="text/javascript">
+			// 1、定义
+			// MDN文档对Object做出了如下定义：
+			// Object是JavaScript的一种“数据类型”。它用于存储各种键值集合和更复杂的实体。
+
+			// 2、Object数据类型的创建。（1）使用Object()构造函数创建。（2）使用“对象字面量”的方式创建。
+			// 使用Object()构造函数创建，这个是完整的语法。
+			const myObj = new Object({
+				name: 'Jimmy',
+				age: 20,
+				sex: 'male'
+			});
+			// 使用“对象字面量”创建，是Object的语法糖。
+			const myObjSugar = {
+				name: 'Jimmy',
+				age: 20,
+				sex: 'male'
+			}
+
+			// 2、增删改查
+			// 2.1 增
+			// 2.1.1 使用Object.assign()
+			// 语法：Object.assign(target,...sources)
+			// 将可枚举属性的值从一个或多个源对象分配到目标对象，并返回目标对象。
+			const newMyObj = Object.assign(myObj, {
+				favorite: '看书'
+			}, {
+				school: '清华大学附属中学'
+			});
+			Log("myObj",myObj);
+			Log("newMyObj",newMyObj);
+			
+			// 2.1.1 直接赋值
+			myObj.university = '清华大学' // 赋值方式1
+			myObj['college'] = '计算机学院' // 赋值方式2，防止出现提示没有key
+			myObj.other = '其他'
+			
+			// 2.2 删
+			// 2.2.1 使用delete
+			delete myObj.other;
+			delete myObj['other']
+			
+			// 2.3 改
+			// 2.3.1 直接赋值，无需多言
+			// 直接赋值只会修改自身属性，无法修改原型内的共有属性
+			myObj.college = '数理学院'
+			// 2.3.2 使用Object.create()
+			// Object.create()方法创建一个新对象，使用现有的对象来提供新创建的对象的proto
+			const newCreateMyObj = Object.create(myObj);
+			newCreateMyObj.university = '北京大学'
+			newCreateMyObj.college = '计算机学院'
+			// 规范对于原型属性这块的增改的规定，大概意思是，要改就一开始就改proto，不要后来再修改proto
+			Log("newCreateMyObj",newCreateMyObj);
+			
+			// 2.4 查
+			// 2.4.1 查看自身所有属性：Object.keys(obj)
+			const myObjKeys = Object.keys(myObj);
+			Log("myObjKeys",myObjKeys)
+			// 2.4.2 查看自身所有的值：Object.values(obj)
+			const myObjValues = Object.values(myObj);
+			Log("myObjValues",myObjValues)
+			// 2.4.2 查看自身所有+共有属性：console.dir(obj)
+			console.dir("console.dir", myObj)
+			// 2.4.3 判断一个属性是不是自身属性。
+			// hasOwnProperty()方法会返回一个布尔值，
+			// 指示对象自身属性中是否具有指定的属性（也就是是否有指定的键）。
+			const hasToString = myObj.hasOwnProperty("toString")
+			const hasName = myObj.hasOwnProperty("name")
+			const hasHello = myObj.hasOwnProperty("hellao")
+			Log("hasOwnProperty",[hasToString,hasName,hasHello])
+			// 如果指定的属性在指定的对象或其原型链中，则in运算符返回true。
+			const nameIn = "name" in myObj;
+			const helloIn = "hello" in myObj;
+			Log("nameIn",nameIn)
+			Log("helloIn",helloIn)
+			
+			// Object.defineProperty()
+			// Object.defineProperty(obj, prop, descriptor)会在一个对象上定义
+			// 一个新属性，或修改一个对象的现有属性，并返回此对象
+			// obj:要定义属性的对象
+			// prop:要定义或修改的属性名称或Symbol
+			// descriptor:
+			Object.defineProperty(myObj, 'favorite', {
+				value: '唱歌', //设置属性值 不能与get()、set()同时使用
+				writable: true, // 该属性值是否可编辑 不能与get()、set()同时使用
+				configurable: true, // 该属性是否能删除
+				enumerable: true, // 该属性是否能枚举
+				// get(){
+				//  return value // 读取该属性会触发get,并返回一个val,默认undefined
+				// },
+				// set(newVal){
+				//   value = newVal // 设置新值 参数为修改值
+				// }
+			});
+			Object.defineProperty(myObj, 'age', {
+				value: 30
+			});
+			console.log(myObj);
+			
+			
+			
+			function Log(tag, data){
+				console.log(tag, data);
+			}
+		</script>
+	</head>
+	<body>
+		请打开控制台查看Console
+	</body>
+</html>

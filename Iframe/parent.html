@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" type="text/css" href="./common.css" />
+		<title>Iframe教程</title>
+	</head>
+	<body>
+		<h2>父页面</h2>
+		<button onclick="doAction()">点击触发父页面事件</button><br>
+		<button onclick="postValue1()">通过URL传值</button><br>
+		<button onclick="postValue2()">通过postMessage传值</button>
+		<br />
+		<iframe id="iframeContainer" name="iframePage" src="./child.html" frameborder="0" scrolling="no">
+		</iframe>
+		<script>
+			const doAction = () => {
+				console.log("Iframe教程：触发父页面的事件");
+			};
+
+			/**
+			 * 父页面传值给子页面
+			 * 一共有两种方式：1、通过URL传参。2、通过window.postMessage()方法。
+			 */
+
+			/**
+			 * 1、通过URL传参
+			 * 父页面传值给子页面
+			 */
+			const postValue1 = () => {
+				const iframeDom = document.getElementById('iframeContainer');
+				// 获取iframe父页面并拼接上要传递的数据
+				const url = iframeDom.src + '?id=a&name=父页面';
+				// 重新给iframe赋url
+				iframeDom.src = url;
+			}
+
+			/**
+			 * 2、通过window.postMessage()方法
+			 * 父页面传值给子页面
+			 */
+			const postValue2 = () => {
+				const iframeDom = document.getElementById('iframeContainer');
+				const currentWindow = iframeDom.currentWindow;
+				currentWindow.postMessage("我是来自父页面的数据", "*");
+			}
+
+			//postMessage方法有三个参数
+			// 参数1 ：发送的数据；
+			// 参数2 ：哪些窗口能收到消息事件，用来指定接收消息事件的窗口，其值可以是一个URI或者字符串"*"（表示无限制）举个栗子：window.postMessage(‘hello!’, ‘http://127.0.0.1:5005’);
+			// 参数3：是一串和 message 同时传递的 Transferable 对象。这些对象的所有权将被转移给消息的接收方，而发送一方将不再保有所有权。
+			// 接收postMessage方的怎么用呢？
+
+			// e.source --消息源，消息发送的窗口/iframe
+			// e.origin – 消息源的URI,用来验证数据源
+			// e.data – 数据
+
+			/**
+			 * 子页面传值给父页面
+			 * 一共有两种方式：1、通过全局变量方式传参。2、通过window.parent.postMessage()方法。
+			 */
+
+			/**
+			 * 1、通过全局变量方式传参
+			 * 子页面传值给父页面
+			 */
+			window.onload = function() {
+				console.log("Iframe教程：contentWindow.commonData4：", document.getElementById('iframeContainer').contentWindow
+					.commonData4)
+				console.log("Iframe教程：contentWindow.commonData5：", document.getElementById('iframeContainer').contentWindow
+					.commonData5)
+				console.log("Iframe教程：contentWindow.commonData6：", document.getElementById('iframeContainer').contentWindow
+					.commonData6)
+				// 调用方法
+				document.getElementById('iframeContainer').contentWindow.commonData6()
+			}
+
+			/**
+			 * 2、通过window.parent.postMessage()方法。
+			 * 子页面传值给父页面
+			 */
+
+			window.onload = function() {
+					window.addEventListener('message', function(e) {
+						console.log(e.data)
+					})
+		</script>
+	</body>
+</html>

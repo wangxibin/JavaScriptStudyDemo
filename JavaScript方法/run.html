@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>JavaScript方法</title>
+		<script type="text/javascript">
+			a();
+			// function是关键字，可以用来创建一个方法或者对象的构造函数（重要知识点）
+			// 这种创建方法的方式会被解析器优先识别，称为：全局提升
+			function a(){
+				alert('function a(){}');
+			}
+			
+			// 以下这种会报错：Uncaught ReferenceError: b is not defined
+			// b();
+			const b = function(){
+				alert('const b = function(){}');
+			}
+			
+			// Function是引用类型，是JavaScript的一个内置对象，同时也是一个构造器，也是一个构造函数
+			// Js的普通函数都是Function对象的实例，同时Function也是一个Object。
+			// 以下创建方法的方式是对Function对象的实例化，fun会继承Function原型对象的所有属性
+			// 编写Js模板引擎必须用Function
+			const fun = new Function("alert('const fun = new Function()');");
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

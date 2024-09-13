@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>03.EsModules导入导出注释事项</title>
+	</head>
+	<body>
+		<script type="module">
+			// 01.对象后面的花括号和export后的花括号是不同的概念
+			// 这个花括号是个对象
+			var obj = {
+				name,
+				age
+			}
+
+			// 这个花括号是个引用
+			export {
+				name,
+				age
+			}
+
+			// 错误的导出示例
+			export name // 错误的导出用法
+			export 'age' // 同样错误的导出用法
+
+			// 可以使用如下方式导出
+			export
+			default name
+
+
+			// 02.导入导出的是引用的内存地址
+			var name = 'jack'
+			var age = 18
+			export {
+				name,
+				age
+			}
+
+			setTimeout(() => {
+				name = 'ben'
+			}, 1000)
+
+			import {
+				name,
+				age
+			} from './export.js'
+
+			console.log(name, age);
+			// jack 18
+
+			// 导入成员并不是复制一个副本
+			// 而是直接导入模块成员的引用地址
+			// 也就是说import得到的变量与export导入的变量在内存中是同一块空间
+			// 一旦模块中的成员修改了，这里也会同时改变
+			setTimeout(() => {
+				console.log(name, age);
+				// ben 18
+			}, 1500)
+
+			// 03.导入的变量只读
+			import {
+				name,
+				age
+			}
+			form './export.js'
+			name = 1; // Uncaught TypeError: Assignment to constant variable.=
+			
+			const a = 2;
+			a = 3; // 报错：Uncaught TypeError: Assignment to constant variable.
+			
+			// 观察：从模块导出的变量，修改后报错的信息是与修改常量的报错信息是一致的，也就是说导入的变量的
+			// 类似用了const声明
+			
+			
+		</script>
+	</body>
+</html>
