@@ -1,0 +1,10 @@
+{
+  "code": 20000,
+  "msg": "success",
+  "data": {
+    "name": "JimmyWang",
+    "sex": "male",
+    "age": 31,
+    "address": "beijing"
+  }
+}

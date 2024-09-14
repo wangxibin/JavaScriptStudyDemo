@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>ES6 Promise</title>
+    <!-- jQuery 3.6.0 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript">
+      class MyLog {
+        constructor() {
+          log("MyLog=>constructor()=>执行了...");
+          log(this);
+        }
+
+        static log = (c) => {
+          console.log(c);
+        };
+
+        static warn = (c) => {
+          console.log(c);
+        };
+        static info = (c) => {
+          console.info(c);
+        };
+
+        static dir = (c) => {
+          console.dir(c);
+        };
+      }
+
+      const promise = new Promise((resolve, reject) => {
+        // 这里先打印说明在Promise的构造方法中已执行上面方法
+        MyLog.log(resolve);
+        MyLog.log(reject);
+        // Promise是否能区分这里是不是耗时工作
+        resolve("1111");
+        const mP = 0;
+        MyLog.log(mP);
+      });
+      promise
+        .then(() => {
+          alert(1111)
+          MyLog.log(res);
+        })
+        .then((res) => {
+          alert(1111)
+          MyLog.log(a);
+        })
+        .then(() => {
+          MyLog.log(c);
+        })
+        .catch(() => {
+          MyLog.log(d);
+        })
+        .catch(() => {
+          MyLog.log(e);
+        })
+        .catch(() => {
+          MyLog.log(f);
+        })
+        .finally(() => {
+          MyLog.log(g);
+        })
+        .finally(() => {
+          MyLog.log(h);
+        })
+        .finally(() => {
+          MyLog.log(i);
+        });
+      MyLog.log(promise);
+    </script>
+  </body>
+</html>
