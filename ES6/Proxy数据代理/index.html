@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>ES5 DefineProperty和ES6 Proxy</title>
+    <!-- jQuery 3.6.0 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <p>测试ES5 DefineProperty</p>
+      <button id="btnD1">修改名字</button>
+      <button id="btnD2">修改学校</button>
+      <button id="btnD3">修改其他</button>
+    </div>
+
+    <div>
+      <p>测试ES6 Proxy</p>
+      <button id="btnP1">修改名字</button>
+      <button id="btnP2">修改学校</button>
+      <button id="btnP3">修改其他</button>
+      <button id="btnP4">调用fun方法</button>
+    </div>
+
+    <script>
+      const TAG = "Proxy数据代理=>";
+
+      const me = new Object({
+        name: "JimmyWang",
+        age: 20,
+        sex: "male",
+        other: {
+          favorite: "看书",
+          school: "清华大学附属中学",
+          college: "计算机学院",
+        },
+        get fun(){
+          console.log('other', this.other);
+        }
+      });
+
+      me.fun;
+
+      // 简单模拟写一下vue的数据劫持
+      // 深度遍历会影响性能。
+      const observe = (obj) => {
+        for (const key in obj) {
+          if (typeof obj[key] === "object") {
+            observe(obj[key]);
+          } else {
+            // ES5的defineProperty()
+            Object.defineProperty(obj, key, {
+              get(v) {
+                console.log(`${TAG}observe()=>获取=>v`, v);
+              },
+              set(v) {
+                console.log(`${TAG}observe()=>设置=>v`, v);
+              },
+            });
+          }
+        }
+      };
+
+      // ES6的Proxy
+      let meProxy = new Proxy(me, {
+        get(target, key) {
+          console.log(`${TAG}Proxy=>获取=>target`, target);
+          console.log(`${TAG}Proxy=>获取=>key`, key);
+          return target[key];
+        },
+        set(target, key, value) {
+          console.log(`${TAG}Proxy=>设置=>target`, target);
+          console.log(`${TAG}Proxy=>设置=>key`, key);
+          console.log(`${TAG}Proxy=>设置=>value`, value);
+        },
+      });
+
+      observe(me);
+
+      // 测试ES5的defineProperty效果
+
+      $("#btnD1").click(() => {
+        me.name = "吴彦祖";
+      });
+
+      $("#btnD2").click(() => {
+        me.other.school = "北京大学";
+      });
+
+      $("#btnD3").click(() => {
+        me.other = {
+          favorite: "学习",
+          school: "上海交通大学",
+          college: "计算机学院",
+        };
+      });
+
+      // 测试ES6的Proxy的效果
+
+      $("#btnP1").click(() => {
+        meProxy.name = "周杰伦";
+      });
+
+      $("#btnP2").click(() => {
+        meProxy.other.school = "南开大学";
+      });
+
+      $("#btnP3").click(() => {
+        meProxy.other = {
+          favorite: "打篮球并秀球技",
+          school: "北京体育学院",
+          college: "篮球学院",
+        };
+      });
+
+      $("#btnP4").click(() => {
+        meProxy.fun;
+      });
+    </script>
+  </body>
+</html>
