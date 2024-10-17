@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>ES5普通function和ES6箭头函数</title>
+    <!-- jQuery 3.6.0 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+
+    <script>
+      const TAG = "ES5普通function和ES6箭头函数=>";
+
+      const person = {
+        name: "JimmyWang",
+        age: 20,
+        sex: "male",
+        other: {
+          favorite: "看书",
+          school: "清华大学附属中学",
+          college: "计算机学院",
+        },
+        get outName() {
+          console.log(this);
+          console.log("outName", this.name);
+        },
+        outAge: function () {
+          console.log(this);
+          console.log("outAge", this.age);
+        },
+        outSex: () => {
+          console.log(this);
+          console.log("outSex", this.sex);
+        },
+      };
+
+      person.outName;
+      person.outAge();
+      person.outSex(); 
+
+      function CreateJimmy() {
+        this.name =  "Jimmy",
+        this.age = 20,
+        this.sex = "male",
+        console.log("CreateJimmy", this);
+        console.log("CreateJimmy", this.constructor);
+      }
+
+      const CreateDaMing = function () {
+        this.name =  "DaMing",
+        this.age = 20,
+        this.sex = "female",
+        console.log("CreateDaMing", this);
+        console.log("CreateDaMing", this.constructor);
+      };
+
+      const CreateLingLing = () => {
+        var name =  "LingLing";
+        var age = 20;
+        var sex = "female";
+
+        function outName(){
+          console.log("CreateLingLing=>outName", this);
+          console.log("CreateLingLing=>outName", this.name);
+          console.log("CreateLingLing=>outName", name);
+        }
+
+        function outAge(){
+          console.log("CreateLingLing=>outAge=>this    ", this);
+          console.log("CreateLingLing=>outAge", this.age);
+          console.log("CreateLingLing=>outAge", age);
+        }
+
+        var outSex = () =>  {return 2};
+
+        console.log("CreateLingLing=>this", this);
+        console.log("CreateLingLing=>constructor", this.constructor);
+
+        outName();
+        outAge();
+        console.log(outSex());
+      };
+
+      CreateLingLing();
+   
+
+      // 普通function创建之后，this指向自己的对象
+      // constructor指向自己的构造方法
+      // const createJimmy = new CreateJimmy();
+
+      // 普通function创建之后，this指向自己的对象
+      // constructor指向自己的构造方法
+      // const createDaMing = new CreateDaMing();
+
+      // 箭头函数不支持new
+      // const createLingLing = new CreateLingLing();
+
+      // 函数直接调用。
+      // CreateJimmy();
+      // CreateDaMing();
+      // CreateLingLing();
+
+    </script>
+  </body>
+</html>
