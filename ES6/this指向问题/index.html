@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>JavaScript this指向问题</title>
+    <!-- jQuery 3.6.0 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <script>
+      const TAG = "JavaScript this指向问题=>";
+
+      var name = "霉霉";
+
+      // 1、默认绑定规则：全局环境中this指向window
+      var obj = {
+        name: "周杰伦",
+        foo: function () {
+          console.log("foo", this);
+
+          function foo1() {
+            // 这里的this指向window
+            console.log("foo1", this);
+
+            // 立即执行函数独立调用时this指向window，与这个函数在哪里声明没关系
+            (function () {
+              console.log("IFEE", this);
+            })();
+          }
+
+          // 函数独立调用时this指向window，与这个函数在哪里声明没关系
+          foo1();
+
+          // 闭包的产生：当函数执行时，导致一个内部新函数被定义，并抛出这个新函数，此时就产生了闭包
+          function foo2() {
+            console.log("foo2", this);
+          }
+          return foo2;
+        },
+      };
+
+      obj.foo()();
+
+      // 2、隐式绑定规则：谁调用就指向谁；（隐式丢失，参数赋值）
+      var name = "贾斯汀比伯";
+
+      function foo() {
+        console.log("foo", this);
+      }
+
+      var obj = {
+        name: "汪苏泷",
+        foo: foo,
+      };
+
+      // 隐式丢失（把方法体赋值给一个参数，然后通过参数+()执行，就是隐式丢失）
+      // 这里是通过obj对象调用的
+      // obj.foo();
+
+      // 下面仍然是独立调用
+      // bar拿的是foo()的方法体
+      // var bar = obj.foo;
+      // 这里仍然是独立调用
+      // bar();
+
+      // 参数赋值情况
+      var name = "许巍";
+
+      function foo() {
+        console.log("foo", this);
+      }
+
+      function bar(fn) {
+        console.log("fn", this);
+        fn.bind(obj)();
+      }
+
+      var obj = {
+        name: "许嵩",
+        foo: foo,
+      };
+
+      // 在预编译过程中，实参被赋值为形参（值的拷贝的过程，浅拷贝）
+      // bar(obj.foo);
+
+      // 3、显示绑定：call、apply、bind
+
+      // 4、通过new创建
+      function Person() {
+        // 通过new创建的时候，会改变this的指向，this会指向通过Person创建的对象
+        // 此时的Person可以看做是一个构造函数
+        console.log("Person", this);
+
+        // 无return时，通过new会返回this
+        // return一个对象类型，会返回这个对象
+        // return一个基本数据类型，会返回this
+        // PS:平时没人这样用，bro
+        // return {};
+        // return [];
+        // return true;
+      }
+
+      // console.log('new Person()', new Person())
+
+      // 最后，优化执行顺序：new>显式绑定>隐式绑定>默认绑定
+
+      function foo() {
+        console.log(this);
+        return () => {
+          console.log("第1个箭头函数", this);
+          return () => {
+            console.log("第2个箭头函数", this);
+            return () => {
+              console.log("第3个箭头函数", this);
+            };
+          };
+        };
+      }
+
+      var f = foo.call({ id: 1 });
+
+      console.log("f", f);
+
+      // 箭头函数可以使用call、apply、bind方法但是改变的this是所在作用域的this
+      var f1 = f.call({ id: 2 })()();
+
+      console.log("f1", f1);
+
+      async function aaa() {
+        await setTimeout(() => {
+          Promise.resolve("你好，Promise").then((res) => {
+            console.log("res", res);
+          });
+        }, 0);
+      }
+
+    </script>
+  </body>
+</html>
