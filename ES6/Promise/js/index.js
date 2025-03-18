@@ -22,7 +22,7 @@
     };
 
     static err = (...c) => {
-      console.erroror(c);
+      console.error(c);
     };
   }
 
